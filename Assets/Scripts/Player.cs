@@ -60,9 +60,9 @@ public class Player : MonoBehaviour {
 					time = 0;
 					origin = transform.position;
 				}
-			} else if (Input.GetButton("Fire")) {
-
-
+			} else if (Input.GetButtonDown ("Fire")) {
+				GameObject gameObj = GameObject.Instantiate(wave);
+				gameObj.transform.position = transform.position;
 			}
 		}
 	}

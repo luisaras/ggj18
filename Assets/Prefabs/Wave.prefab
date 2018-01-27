@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 50620428525641508}
   - component: {fileID: 61811336313126004}
   - component: {fileID: 212238135445999820}
-  - component: {fileID: 82773439256306874}
   - component: {fileID: 82760901483494474}
+  - component: {fileID: 82773439256306874}
   m_Layer: 0
   m_Name: Wave
   m_TagString: Untagged
@@ -74,7 +74,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -100,7 +100,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3742438828685844a8547380e158f2c5, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
