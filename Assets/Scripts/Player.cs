@@ -6,7 +6,7 @@ public class Player : MonoBehaviour {
 
 	public static Player instance;
 
-	bool dead = false;
+	public bool dead = false;
 	bool paused = false;
 	Vector2 origin;
 	public Vector2 d = new Vector2(0, 1);
@@ -18,6 +18,8 @@ public class Player : MonoBehaviour {
 
 	void Awake() {
 		instance = this;
+        gui = GameObject.Find("Canvas");
+        gui.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -36,7 +38,8 @@ public class Player : MonoBehaviour {
 			}
 			transform.position = origin + time * d;
 		} else {
-			float dx = Input.GetButtonDown ("Horizontal") ? Input.GetAxisRaw ("Horizontal") : 0;
+
+            float dx = Input.GetButtonDown ("Horizontal") ? Input.GetAxisRaw ("Horizontal") : 0;
 			float dy = Input.GetButtonDown ("Vertical") ? Input.GetAxisRaw ("Vertical") : 0;
 
 			if (transform.position.x + dx < -Stage.instance.width) {
@@ -44,9 +47,10 @@ public class Player : MonoBehaviour {
 			} else if (transform.position.x + dx > Stage.instance.width) {
 				dx = 0;
 			}
+
 			if (transform.position.x + dx < 0) {
 				dy = 0;
-			} else if (transform.position.x + dx > Stage.instance.length) {
+			} else if (transform.position.x + dx > Stage.instance.height) {
 				dy = 0;
 			}
 
@@ -62,13 +66,13 @@ public class Player : MonoBehaviour {
 				}
 			} else if (Input.GetButton("Fire")) {
 
-
 			}
 		}
 	}
 
 	public void Die() {
 		gui.SetActive (true);
+        dead = true;
 	}
 
 }
