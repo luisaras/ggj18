@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+	public static Player instance;
+
 	bool dead = false;
 	bool paused = false;
 	Vector2 origin;
-	Vector2 d;
+	public Vector2 d = new Vector2(0, 1);
 	float time = 1;
 
 	public float speed = 1;
+	public GameObject wave;
 	public GameObject gui;
+
+	void Awake() {
+		instance = this;
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -31,6 +38,18 @@ public class Player : MonoBehaviour {
 		} else {
 			float dx = Input.GetButtonDown ("Horizontal") ? Input.GetAxisRaw ("Horizontal") : 0;
 			float dy = Input.GetButtonDown ("Vertical") ? Input.GetAxisRaw ("Vertical") : 0;
+
+			if (transform.position.x + dx < -Stage.instance.width) {
+				dx = 0;
+			} else if (transform.position.x + dx > Stage.instance.width) {
+				dx = 0;
+			}
+			if (transform.position.x + dx < 0) {
+				dy = 0;
+			} else if (transform.position.x + dx > Stage.instance.length) {
+				dy = 0;
+			}
+
 			if (dx != 0 || dy != 0) {
 				if (dx != d.x || dy != d.y) {
 					float angle = Mathf.Atan2 (dy, dx) * Mathf.Rad2Deg - 90;

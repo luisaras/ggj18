@@ -51,8 +51,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1338142367968010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.49, y: 0.5, z: 0}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children:
   - {fileID: 4985566641515740}
   m_Father: {fileID: 0}
@@ -83,6 +83,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  wave: {fileID: 1592463585957096, guid: 751227d243f4a1642b0e9d2de61fa260, type: 2}
+  gui: {fileID: 0}
 --- !u!212 &212686352196725990
 SpriteRenderer:
   m_ObjectHideFlags: 1

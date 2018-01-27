@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour {
 
-	public Player player;
 	public GameObject explosion;
 
 	void Update() {
-		if ((transform.position - player.transform.position).magnitude < 0.5) {
+		if ((transform.position - Player.instance.transform.position).magnitude < 0.5) {
 			GameObject exp = Instantiate (explosion);
-			exp.transform.position = player.transform.position;
-			player.Die ();
+			exp.transform.position = Player.instance.transform.position;
+			Player.instance.Die ();
 			Destroy (gameObject);
 		}
 	}
