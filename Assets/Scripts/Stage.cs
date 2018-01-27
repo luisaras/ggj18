@@ -35,8 +35,8 @@ public class Stage : MonoBehaviour {
         // Initializing public variables:
         int[,] rawSpace = new int[width, height];
 
-        createPlayer(2, 2, rawSpace);
         fillBorderWithBombs(rawSpace);
+        createPlayer(rawSpace);
         buildField(rawSpace);
     }
 
@@ -62,23 +62,25 @@ public class Stage : MonoBehaviour {
         }
     }
 
-    public void createPlayer(int i, int j, int[,] rawSpace)
+    public void createPlayer(int[,] rawSpace)
     {
-        rawSpace[i, j] = 2;
+        int x = height-1;
+        int y = Random.Range(0, width);
+        rawSpace[x, y] = 2;
     }
 
     public void createBomb(float x, float y) {
-        GameObject aux = Instantiate(bomb, new Vector3(x, y, 0), Quaternion.identity);
+        Instantiate(bomb, new Vector3(x, y, 0), Quaternion.identity);
     }
 
     public void createEndPoint(float x, float y) {
-        GameObject aux = Instantiate(bomb, new Vector3(x, y, 0), Quaternion.identity);
+        Instantiate(bomb, new Vector3(x, y, 0), Quaternion.identity);
     }
 
     public void fillBorderWithBombs(int[,] rawSpace) {
         // Top and Bottom:
         for (int i = 0; i < width; ++i) {
-            rawSpace[0, i] = 1;
+            rawSpace[0, i] = 3;
             rawSpace[height-1, i] = 1;
         }
         
