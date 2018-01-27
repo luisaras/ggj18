@@ -7,6 +7,12 @@ public class Bomb : MonoBehaviour {
 	public GameObject explosion;
 
 	void Update() {
+        if (!Player.instance) {
+            return;
+        }
+        if(Player.instance.dead) {
+            return;
+        }
 		if ((transform.position - Player.instance.transform.position).magnitude < 0.5) {
 			GameObject exp = Instantiate (explosion);
 			exp.transform.position = Player.instance.transform.position;
@@ -14,5 +20,4 @@ public class Bomb : MonoBehaviour {
 			Destroy (gameObject);
 		}
 	}
-
 }
