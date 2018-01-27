@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+	bool dead = false;
+	bool paused = false;
 	Vector2 origin;
 	Vector2 d;
 	float time = 1;
-	public float speed = 1;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+	public float speed = 1;
+	public GameObject gui;
 	
 	// Update is called once per frame
 	void Update () {
+		if (dead)
+			return;
+		if (Input.GetButtonDown ("Pause")) {
+			paused = !paused;
+		}
+		if (paused)
+			return;
 		if (time < 1) {
 			time += Time.deltaTime;
 			if (time >= 1) {
@@ -41,4 +47,9 @@ public class Player : MonoBehaviour {
 			}
 		}
 	}
+
+	public void Die() {
+		gui.SetActive (true);
+	}
+
 }
