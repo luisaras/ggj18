@@ -1,12 +1,13 @@
 fileFormatVersion: 2
 guid: 4c7dd3a0c12ff6b47aa9e7f7cad9c6ca
-timeCreated: 1517087916
+timeCreated: 1517105731
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
   - bomb: {fileID: 1421763704151836, guid: 772cd764064b4b84eb4e9cf5598dec78, type: 2}
+  - endPoint: {fileID: 1676218920910426, guid: e97c84dd037dea24babaddb3e5bc28e0, type: 2}
   - submarine: {fileID: 1338142367968010, guid: 77c877e5f74e2544d9560fefdc0f9fc8,
       type: 2}
   executionOrder: 0

@@ -26,10 +26,6 @@ public class Player : MonoBehaviour {
 		instance = this;
     }
 
-    private void Start() {
-        Debug.Log(losegui);
-    }
-
     // Update is called once per frame
     void Update () {
 		if (dead)
