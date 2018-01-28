@@ -37,7 +37,7 @@ public class Stage : MonoBehaviour {
      * 1 - SURVIVAL
      * 2 - INFRUN
      **/
-    public static int gameMode = 1;
+    public static int gameMode = 2;
 
 	// Use this for initialization
 	void Awake () {
@@ -69,9 +69,10 @@ public class Stage : MonoBehaviour {
     public void infiniteRunPrepare() {
         initializeInfiniteRun();
         int numBombs = (width * height) / 5;
-        createRandomMinesAround(numBombs);
+        createRandomMinesAround(1);
         int numBatteries = (width * height) / 10;
         createRandomBatteriesAround(numBatteries);
+        Debug.Log(printBoard());
     }
 
     public void initializeInfiniteRun() {
@@ -87,9 +88,8 @@ public class Stage : MonoBehaviour {
         int x, y;
         x = width / 2;
         y = height / 2;
-        Instantiate(submarine, new Vector3(x, y, 0), Quaternion.identity);
+        submarine = Instantiate(submarine, new Vector3(y, width - x, 0), Quaternion.identity);
 		Camera.main.transform.position = new Vector3(x, y, -5);
-        Board[x, y].value = 2;
     }
 
     public void createRandomMinesAround(int number) {
@@ -138,6 +138,7 @@ public class Stage : MonoBehaviour {
 
     public void deleteBoard(int i, int j) {
         Board[i, j].value = 0;
+        Destroy(Board[i, j].obj);
         Board[i, j].obj = null;
     }
 
@@ -166,7 +167,7 @@ public class Stage : MonoBehaviour {
     }
 
     public GameObject createBomb(float x, float y) {
-        return Instantiate(bomb, new Vector3(x, y, 0), Quaternion.identity);
+        return Instantiate(bomb, new Vector3(y, width-x, 0), Quaternion.identity);
     }
 
     public void createEndPoint(float x, float y) {
@@ -194,7 +195,7 @@ public class Stage : MonoBehaviour {
         }
 
         Board[i, j].value = 7;
-        Instantiate(battery, new Vector3(i, j), Quaternion.identity);
+        Instantiate(battery, new Vector3(j, width - i, 0), Quaternion.identity);
 
         return true;
     }
@@ -205,7 +206,7 @@ public class Stage : MonoBehaviour {
         }
 
         Board[i, j].value = 1;
-        createBomb(i, j);
+        Board[i, j].obj = createBomb(i, j);
 
         for (int a = -1; a <= 1; a++) 
             for(int b = -1; b <= 1; b++)
@@ -272,4 +273,129 @@ public class Stage : MonoBehaviour {
         }
     }
 
+    public void shiftAll(float angle) {
+
+        angle = angle + 90;
+
+        Space[,] auxBoard = new Space[width, height];
+        for(int i = 0; i < width; ++i) {
+            for(int j = 0; j < height; ++j) {
+                auxBoard[i, j] = new Space();
+                auxBoard[i, j].value = 0;
+            }
+        }
+
+        for (int i = 0; i < width; ++i) {
+            for (int j = 0; j < height; ++j) {
+                // up
+                if (close(angle, 90)) {
+                    if (i == height-1) {
+                        deleteBoard(i, j);
+                    } else {
+                        auxBoard[i + 1, j] = Board[i, j];
+                    }
+                }
+                // down
+                else if (close(angle, 270)) {
+                    if (i == 0) {
+                        deleteBoard(i, j);
+                    } else {
+                        auxBoard[i - 1, j] = Board[i, j];
+                    }
+                }
+                // left
+                else if (close(angle, 180)) {
+                    if (j == width - 1) {
+                        deleteBoard(i, j);
+                    } else {
+                        auxBoard[i, j + 1] = Board[i, j];
+                    }
+                }
+                // right
+                else if (close(angle, 360)) {
+                    if (j == 0) {
+                        deleteBoard(i, j);
+                    } else {
+                        auxBoard[i, j - 1] = Board[i, j];
+                    }
+                }
+            }
+        }
+
+        Board = auxBoard;
+    }
+
+    public void createBorderBombs(float angle) {
+
+        angle = angle + 90;
+        int i = 0;
+        int j = 0;
+
+        // up
+        if (close(angle, 90)) {
+            i = 0;
+            for (j = Random.Range(1, width); j < width;) {
+                Board[i, j].value = 1;
+                Board[i, j].obj = Instantiate(bomb, submarine.transform.position + new Vector3(j - height / 2, width - i - width / 2, 0), Quaternion.identity);
+                j = j + Random.Range(1, width);
+                Debug.Log(submarine.transform.position);
+            }
+        }
+        // down
+        else if (close(angle, 270)) {
+            i = height - 1;
+            for (j = Random.Range(1, width); j < width; ) {
+                Board[i, j].value = 1;
+                Board[i, j].obj = Instantiate(bomb, submarine.transform.position + new Vector3(j - height / 2, width - i - width / 2, 0), Quaternion.identity);
+                j = j + Random.Range(1, width);
+                Debug.Log(submarine.transform.position);
+            }
+        }
+        // left
+        else if (close(angle, 180)) {
+            j = 0;
+            for (i = Random.Range(1, height); i < width; ) {
+                Board[i, j].value = 1;
+                Board[i, j].obj = Instantiate(bomb, submarine.transform.position + new Vector3(j - height / 2, width - i - width / 2, 0), Quaternion.identity);
+                i = i + Random.Range(1, height);
+            }
+        }
+        // right
+        else if (close(angle, 360)) {
+            j = width - 1;
+            for (i = Random.Range(1, height); i < width; ) {
+                Board[i, j].value = 1;
+                Board[i, j].obj = Instantiate(bomb, submarine.transform.position + new Vector3(j - height / 2, width - i - width / 2, 0), Quaternion.identity);
+                i = i + Random.Range(1, height);
+            }
+        }
+    }
+
+    public bool close(float a, float b) {
+
+        if (Mathf.Max(a, b) - Mathf.Min(a, b) < 0.5) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public string printBoard() {
+        string result = "";
+
+        for (int i = 0; i < width; ++i) {
+            for (int j = 0; j < height; ++j) {
+                result += Board[i, j].value;
+                if(Board[i,j].obj != null) {
+                    result += ".";
+                }
+                else {
+                    result += " ";
+                }
+            }
+            result += '\n';
+        }
+
+        return result;
+    }
 }

@@ -58,6 +58,9 @@ public class Player : MonoBehaviour {
 			moveTime += Time.deltaTime * speed;
 			if (moveTime >= 1) {
 				moveTime = 1;
+                Stage.instance.shiftAll(transform.eulerAngles.z);
+                Stage.instance.createBorderBombs(transform.eulerAngles.z);
+                Debug.Log(Stage.instance.printBoard());
 			}
 			transform.position = origin + moveTime * d;
 		} else {
@@ -65,17 +68,19 @@ public class Player : MonoBehaviour {
             float dx = Input.GetButtonDown ("Horizontal") ? Input.GetAxisRaw ("Horizontal") : 0;
 			float dy = Input.GetButtonDown ("Vertical") ? Input.GetAxisRaw ("Vertical") : 0;
 
-			if (transform.position.x + dx < -Stage.instance.width) {
-				dx = 0;
-			} else if (transform.position.x + dx > Stage.instance.width) {
-				dx = 0;
-			}
+            if(Stage.gameMode == 1) {
+                if (transform.position.x + dx < -Stage.instance.width) {
+                    dx = 0;
+                } else if (transform.position.x + dx > Stage.instance.width) {
+                    dx = 0;
+                }
 
-			if (transform.position.x + dx < 0) {
-				dy = 0;
-			} else if (transform.position.x + dx > Stage.instance.height) {
-				dy = 0;
-			}
+                if (transform.position.x + dx < 0) {
+                    dy = 0;
+                } else if (transform.position.x + dx > Stage.instance.height) {
+                    dy = 0;
+                }
+            }
 
 			if (dx != 0 || dy != 0) {
 				if (dx != d.x || dy != d.y) {

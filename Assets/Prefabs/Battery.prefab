@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4736642338151370}
   - component: {fileID: 212332058553680042}
-  - component: {fileID: 114906859017456314}
   - component: {fileID: 61937355738895260}
+  - component: {fileID: 114506263950892570}
   m_Layer: 0
   m_Name: Battery
   m_TagString: Bomb
@@ -67,7 +67,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
---- !u!114 &114906859017456314
+--- !u!114 &114506263950892570
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -75,10 +75,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1230902105551168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8888bc6c1cee16408bd4f45de336094, type: 3}
+  m_Script: {fileID: 11500000, guid: e67b428d935a5854490eb14187c2870e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 1854415069292676, guid: dd82ac94662954c4aa34dc39298708a2, type: 2}
+  explosion: {fileID: 0}
 --- !u!212 &212332058553680042
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -114,7 +114,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.17647058, g: 1, b: 0.556998, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
