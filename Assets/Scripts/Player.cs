@@ -22,8 +22,11 @@ public class Player : MonoBehaviour {
 	public GameObject losegui;
     public GameObject wingui;
 
+    public float playTime;
+
 	void Awake() {
-		instance = this;
+        playTime = Time.time;
+        instance = this;
     }
 
     private void Start() {
@@ -88,10 +91,10 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-    public void Unblock()
-    {
+    public void Unblock() {
         blocked = false;
     }
+
 	public void Die() {
         GameObject LG = Instantiate(losegui, Stage.instance.transform.position, Quaternion.identity);
 		LG.SetActive (true);
@@ -99,8 +102,11 @@ public class Player : MonoBehaviour {
 	}
 
     public void Win() {
+        time = Time.time - time;
         GameObject WG = Instantiate(wingui, Stage.instance.transform.position, Quaternion.identity);
         WG.SetActive(true);
         dead = true;
+
     }
+
 }

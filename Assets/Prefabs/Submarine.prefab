@@ -108,10 +108,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ebc14a2feb55d4ea9d44af60cc6411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldown: 1
+  dead: 0
   d: {x: 0, y: 1}
   speed: 1
   wave: {fileID: 1592463585957096, guid: 751227d243f4a1642b0e9d2de61fa260, type: 2}
-  gui: {fileID: 0}
+  losegui: {fileID: 1405535631368460, guid: 1fd0d189dd8ce174c9d383b326cbc7ec, type: 2}
+  wingui: {fileID: 1726168570095470, guid: beb643485fce2f046aed65cd65c86525, type: 2}
+  playTime: 0
 --- !u!212 &212686352196725990
 SpriteRenderer:
   m_ObjectHideFlags: 1
