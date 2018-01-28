@@ -25,7 +25,7 @@ public class Player : MonoBehaviour {
     public float playTime;
 
 	void Awake() {
-        playTime = Time.time;
+		playTime = Time.time;
         instance = this;
     }
 
@@ -98,7 +98,7 @@ public class Player : MonoBehaviour {
 	}
 
     public void Win() {
-        time = Time.time - time;
+		playTime = Time.time - playTime;
         GameObject WG = Instantiate(wingui, Stage.instance.transform.position, Quaternion.identity);
         WG.SetActive(true);
         dead = true;

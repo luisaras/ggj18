@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class WinGUI : MonoBehaviour {
 
     public Text nameText;
-	public int n = 10;
+	public static int n = 7;
 
     public void GoToMenu() {
         float time = Player.instance.playTime;
