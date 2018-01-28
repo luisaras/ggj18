@@ -160,7 +160,7 @@ public class Stage : MonoBehaviour {
     }
 
     public void createPlayer(int[,] rawSpace) {
-        int x = height-1;
+        int x = height-2;
         int y = Random.Range(1, width-1);
         rawSpace[x, y] = 2;
     }

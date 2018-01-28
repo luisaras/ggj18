@@ -219,8 +219,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 214.6, y: -101.00001}
-  m_SizeDelta: {x: -429.2, y: 109.100006}
+  m_AnchoredPosition: {x: 251, y: -101.00001}
+  m_SizeDelta: {x: -502, y: 109.1}
   m_Pivot: {x: 0.5, y: 0.9084201}
 --- !u!114 &379843208
 MonoBehaviour:
@@ -1127,8 +1127,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -217.80003, y: -146.30864}
-  m_SizeDelta: {x: -435.6, y: 110.600006}
+  m_AnchoredPosition: {x: -251.03, y: -146.30864}
+  m_SizeDelta: {x: -501.95, y: 110.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1866236029
 MonoBehaviour:
@@ -1164,7 +1164,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: '- Use the sound wave to detect a bomb near by.
 
-    - The faster you hear the sound, the closer the bomb is.
+    - The faster you hear the "boop" sound, the closer the bomb is.
 
     - Move north to get to the end of the stage.'
 --- !u!222 &1866236030
