@@ -126,7 +126,7 @@ public class Player : MonoBehaviour {
         dead = true;
     }
 
-    public void fillBattery() {
+    public void FillBattery() {
         energy = energy + energyPower;
     }
 }
