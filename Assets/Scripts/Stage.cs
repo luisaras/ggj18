@@ -12,6 +12,7 @@ public class Stage : MonoBehaviour {
 
     public List<Vector2> endPos;
     public GameObject bomb;
+    public GameObject endPoint;
     public GameObject submarine;
 
     /**
@@ -36,7 +37,7 @@ public class Stage : MonoBehaviour {
 
         fillBorderWithBombs(rawSpace);
         createPlayer(rawSpace);
-        fillSpace(3, rawSpace);
+        fillSpace(10, rawSpace);
         buildField(rawSpace);
     }
 
@@ -77,10 +78,11 @@ public class Stage : MonoBehaviour {
     }
 
     public void createEndPoint(float x, float y) {
-        Instantiate(bomb, new Vector3(x, y, 0), Quaternion.identity);
+        Instantiate(endPoint, new Vector3(x, y, 0), Quaternion.identity);
     }
 
     public void fillBorderWithBombs(int[,] rawSpace) {
+
         // Top and Bottom:
         for (int i = 0; i < width; ++i) {
             rawSpace[0, i] = 3;
@@ -95,18 +97,24 @@ public class Stage : MonoBehaviour {
     }
 
     public bool createWarningBomb(int _i, int _j, int[,] rawSpace) {
-        for(int i = -1; i <= 1; i++) 
-            for(int j = -1; j < 1; j++)
-                return placeWarning(i + _i, j + _j, rawSpace);
+        if(p(_i, _j) && rawSpace[_i, _j] != 0) {
+            return false;
+        }
 
-        return false;
+        rawSpace[_i, _j] = 1;
+
+        for (int i = -1; i <= 1; i++) 
+            for(int j = -1; j <= 1; j++)
+                placeWarning(i + _i, j + _j, rawSpace);
+
+        return true;
     }
 
     public bool placeWarning(int i, int j, int[,] rawSpace) {
         if (!p(i, j))
             return false;
 
-        if (rawSpace[i, j] != 1)
+        if (rawSpace[i, j] == 0)
             rawSpace[i, j] = 5;
 
         return true;
@@ -133,8 +141,7 @@ public class Stage : MonoBehaviour {
                 counter++;
             };
 
-            if(counter == number-1)
-            {
+            if (counter == number) {
                 return;
             }
         }
