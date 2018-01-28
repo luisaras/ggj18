@@ -28,9 +28,14 @@ public class Player : MonoBehaviour {
     public float energyPower;
     public float energyLossDPS;
 
+	AudioSource moveAudio;
+	AudioSource turnAudio;
 
     void Awake() {
         playTime = Time.time;
+		AudioSource[] sources = GetComponents<AudioSource> ();
+		moveAudio = sources [0];
+		turnAudio = sources [1];
         instance = this;
     }
 
@@ -49,7 +54,7 @@ public class Player : MonoBehaviour {
 		if (paused)
 			return;
 		if (time < 1) {
-			time += Time.deltaTime;
+			time += Time.deltaTime * speed;
 			if (time >= 1) {
 				time = 1;
 			}
@@ -73,6 +78,7 @@ public class Player : MonoBehaviour {
 
 			if (dx != 0 || dy != 0) {
 				if (dx != d.x || dy != d.y) {
+					turnAudio.Play ();
 					float angle = Mathf.Atan2 (dy, dx) * Mathf.Rad2Deg - 90;
                     Vector3 aux = Camera.main.transform.eulerAngles;
 					transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
@@ -80,22 +86,17 @@ public class Player : MonoBehaviour {
 					d.x = dx;
 					d.y = dy;
 				} else {
+					moveAudio.Play ();
 					time = 0;
 					origin = transform.position;
 				}
 			} else if (Input.GetButtonDown ("Fire") && !blocked) {
-
-
 				GameObject gameObj = Instantiate(wave);
 				gameObj.transform.position = transform.position;
-           
                 blocked = true;
-
                 Invoke("Unblock", cooldown);
-
 			}
 		}
-
         executeEnergyModule();
     }
 

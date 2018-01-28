@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Wave : MonoBehaviour {
-	
+
+	public float speed = 3;
 	bool back = false;
 
 	// Use this for initialization
 	void Start () {
-		GetComponent<Rigidbody2D> ().velocity = Player.instance.d;
+		GetComponent<Rigidbody2D> ().velocity = Player.instance.d * speed;
         Destroy(gameObject, 30);
 	}
 

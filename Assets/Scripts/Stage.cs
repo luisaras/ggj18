@@ -37,7 +37,7 @@ public class Stage : MonoBehaviour {
      * 1 - SURVIVAL
      * 2 - INFRUN
      **/
-    public int gameMode;
+    public static int gameMode = 1;
 
 	// Use this for initialization
 	void Awake () {
