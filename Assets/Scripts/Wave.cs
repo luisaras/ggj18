@@ -9,6 +9,7 @@ public class Wave : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GetComponent<Rigidbody2D> ().velocity = Player.instance.d;
+        Destroy(gameObject, 30);
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
@@ -16,9 +17,11 @@ public class Wave : MonoBehaviour {
 			if(back){
             	GetComponent<AudioSource>().Play(); // Quando bater no submarino
 			}
-		} else {
-			GetComponent<Rigidbody2D> ().velocity *= -1;
-			back = true;
+		} else if(other.gameObject.CompareTag("Bomb")) {
+            if (!back) {
+                GetComponent<Rigidbody2D>().velocity *= -1;
+                back = true;
+            }
 		}
 	}
 
