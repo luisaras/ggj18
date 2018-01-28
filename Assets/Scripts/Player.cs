@@ -6,9 +6,14 @@ public class Player : MonoBehaviour {
 
 	public static Player instance;
 
-	public bool dead = false;
+    public float cooldown = 1;
+
+    public bool dead = false;
 	bool paused = false;
-	Vector2 origin;
+
+    bool blocked = false;
+ 
+    Vector2 origin;
 	public Vector2 d = new Vector2(0, 1);
 	float time = 1;
 
@@ -69,13 +74,24 @@ public class Player : MonoBehaviour {
 					time = 0;
 					origin = transform.position;
 				}
-			} else if (Input.GetButtonDown ("Fire")) {
-				GameObject gameObj = GameObject.Instantiate(wave);
+			} else if (Input.GetButtonDown ("Fire") && !blocked) {
+
+
+				GameObject gameObj = Instantiate(wave);
 				gameObj.transform.position = transform.position;
+           
+                blocked = true;
+
+                Invoke("Unblock", cooldown);
+
 			}
 		}
 	}
 
+    public void Unblock()
+    {
+        blocked = false;
+    }
 	public void Die() {
         GameObject LG = Instantiate(losegui, Stage.instance.transform.position, Quaternion.identity);
 		LG.SetActive (true);
@@ -87,5 +103,4 @@ public class Player : MonoBehaviour {
         WG.SetActive(true);
         dead = true;
     }
-
 }

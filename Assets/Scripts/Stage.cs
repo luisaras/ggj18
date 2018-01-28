@@ -129,7 +129,6 @@ public class Stage : MonoBehaviour {
             x = Random.Range(1, width - 2);
             y = Random.Range(1, height - 2);
 
-            //Debug.Log(List<int>() { x, y });
             if (createWarningBomb(x, y, rawSpace)) {
                 counter++;
             };
