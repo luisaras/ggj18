@@ -18,7 +18,7 @@ public class EndPoint : MonoBehaviour
         {
             GameObject vic = Instantiate(victory);
             vic.transform.position = Player.instance.transform.position;
-            Stage.instance.Win();
+            Player.instance.Win();
             Destroy(gameObject);
         }
     }

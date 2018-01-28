@@ -14,16 +14,19 @@ public class Player : MonoBehaviour {
 
 	public float speed = 1;
 	public GameObject wave;
-	public GameObject gui;
+	public GameObject losegui;
+    public GameObject wingui;
 
 	void Awake() {
 		instance = this;
-        gui = GameObject.Find("Canvas");
-        gui.SetActive(false);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    private void Start() {
+        Debug.Log(losegui);
+    }
+
+    // Update is called once per frame
+    void Update () {
 		if (dead)
 			return;
 		if (Input.GetButtonDown ("Pause")) {
@@ -57,7 +60,9 @@ public class Player : MonoBehaviour {
 			if (dx != 0 || dy != 0) {
 				if (dx != d.x || dy != d.y) {
 					float angle = Mathf.Atan2 (dy, dx) * Mathf.Rad2Deg - 90;
+                    Vector3 aux = Camera.main.transform.eulerAngles;
 					transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
+                    Camera.main.transform.eulerAngles = aux;
 					d.x = dx;
 					d.y = dy;
 				} else {
@@ -72,8 +77,15 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Die() {
-		gui.SetActive (true);
+        GameObject LG = Instantiate(losegui, Stage.instance.transform.position, Quaternion.identity);
+		LG.SetActive (true);
         dead = true;
 	}
+
+    public void Win() {
+        GameObject WG = Instantiate(wingui, Stage.instance.transform.position, Quaternion.identity);
+        WG.SetActive(true);
+        dead = true;
+    }
 
 }
