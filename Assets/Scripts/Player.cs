@@ -4,32 +4,33 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+	// Singleton
 	public static Player instance;
 
-    public float cooldown = 1;
-
+ 	// Public access
     public bool dead = false;
-	bool paused = false;
-
-    bool blocked = false;
- 
-    Vector2 origin;
 	public Vector2 d = new Vector2(0, 1);
-	float time = 1;
+	public float playTime;
 
-	public float speed = 1;
-	public GameObject wave;
-	public GameObject losegui;
-    public GameObject wingui;
-
-    public float playTime;
-
-    public float energy = 100;
-    public float energyPower;
-    public float energyLossDPS;
-
+	// Private
+	bool paused = false;
+    bool blocked = false;
+    Vector2 origin;
 	AudioSource moveAudio;
 	AudioSource turnAudio;
+	float moveTime = 1;
+
+	// Game variables
+	public float cooldown = 1;
+	public float speed = 1;
+	public float energy = 100;
+	public float energyPower;
+	public float energyLossDPS;
+    
+	// External game objects
+	public GameObject wave;
+	public GameObject losegui;
+	public GameObject wingui;
 
     void Awake() {
         playTime = Time.time;
@@ -53,12 +54,12 @@ public class Player : MonoBehaviour {
 		}
 		if (paused)
 			return;
-		if (time < 1) {
-			time += Time.deltaTime * speed;
-			if (time >= 1) {
-				time = 1;
+		if (moveTime < 1) {
+			moveTime += Time.deltaTime * speed;
+			if (moveTime >= 1) {
+				moveTime = 1;
 			}
-			transform.position = origin + time * d;
+			transform.position = origin + moveTime * d;
 		} else {
 
             float dx = Input.GetButtonDown ("Horizontal") ? Input.GetAxisRaw ("Horizontal") : 0;
@@ -87,7 +88,7 @@ public class Player : MonoBehaviour {
 					d.y = dy;
 				} else {
 					moveAudio.Play ();
-					time = 0;
+					moveTime = 0;
 					origin = transform.position;
 				}
 			} else if (Input.GetButtonDown ("Fire") && !blocked) {

@@ -87,10 +87,8 @@ public class Stage : MonoBehaviour {
         int x, y;
         x = width / 2;
         y = height / 2;
-        Transform player = Instantiate(submarine, new Vector3(x, y, 0), Quaternion.identity).transform;
-        Transform camera = GameObject.Find("Main Camera").transform;
-        camera.SetParent(player);
-        camera.position = new Vector3(player.position.x, player.position.y, -5);
+        Instantiate(submarine, new Vector3(x, y, 0), Quaternion.identity);
+		Camera.main.transform.position = new Vector3(x, y, -5);
         Board[x, y].value = 2;
     }
 
@@ -144,32 +142,24 @@ public class Stage : MonoBehaviour {
     }
 
     public void buildField(int[,] rawSpace) {
-        for (int i = 0; i < width; ++i)
-        {
-            for (int j = 0; j < height; ++j)
-            {
+        for (int i = 0; i < width; ++i) {
+            for (int j = 0; j < height; ++j) {
                 int field = rawSpace[i, j];
-                if (field == 1)
-                {
+                if (field == 1) {
                     createBomb(j, -i);
                 }
-                else if (field == 2)
-                {
-                    Transform player = Instantiate(submarine, new Vector3(j, -i, 0), Quaternion.identity).transform;
-                    Transform camera = GameObject.Find("Main Camera").transform;
-                    camera.SetParent(player);
-                    camera.position = new Vector3(player.position.x, player.position.y, -5);
+                else if (field == 2) {
+                    Instantiate(submarine, new Vector3(j, -i, 0), Quaternion.identity);
+					Camera.main.transform.position = new Vector3(j, -i, -5);
                 }
-                else if (field == 3)
-                {
+                else if (field == 3) {
                     createEndPoint(j, -i);
                 }
             }
         }
     }
 
-    public void createPlayer(int[,] rawSpace)
-    {
+    public void createPlayer(int[,] rawSpace) {
         int x = height-1;
         int y = Random.Range(1, width-1);
         rawSpace[x, y] = 2;
@@ -257,8 +247,7 @@ public class Stage : MonoBehaviour {
     }
 
     public bool p(int i, int j) {
-        if (i < 0 || j < 0 || i >= width || j >= height)
-        {
+        if (i < 0 || j < 0 || i >= width || j >= height) {
             return false;
         }
 
