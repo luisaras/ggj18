@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Highscore : MonoBehaviour {
 
-	public int n = 10;
+	int n = 10;
 	public Text myText;
 
 	// Use this for initialization
@@ -15,13 +15,9 @@ public class Highscore : MonoBehaviour {
 		for (int i = 1; i <= n; i++) {
 			if (!PlayerPrefs.HasKey("Time" + i))
 				break;
-			myText.text += PlayerPrefs.GetFloat ("Time" + i) + "\n";
+			float time = PlayerPrefs.GetFloat ("Time" + i);
+			myText.text += time.ToString ("0.00") + "s\n";
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-		
+
 }

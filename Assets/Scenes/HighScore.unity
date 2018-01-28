@@ -491,9 +491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725c2f01e0241ce46803c7070e6a407e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  n: 3
   myText: {fileID: 0}
-  score: 50
 --- !u!1 &1371366948
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc350b5d2cbd873448a68a9c0cba3762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  n: 3
   myText: {fileID: 0}
 --- !u!1 &1560483256
 GameObject:
