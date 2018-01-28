@@ -20,10 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4280543192535326}
   - component: {fileID: 212340176955038356}
-  - component: {fileID: 114920605727248538}
   - component: {fileID: 61694732303496724}
+  - component: {fileID: 114121869763717104}
   m_Layer: 0
-  m_Name: Endpoint
+  m_Name: EndPoint
   m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1676218920910426}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -67,7 +67,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
---- !u!114 &114920605727248538
+--- !u!114 &114121869763717104
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -75,10 +75,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1676218920910426}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8888bc6c1cee16408bd4f45de336094, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d92d5e3de5bb8b4e941304a1c8bcf23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 1854415069292676, guid: dd82ac94662954c4aa34dc39298708a2, type: 2}
+  victory: {fileID: 1726168570095470, guid: beb643485fce2f046aed65cd65c86525, type: 2}
 --- !u!212 &212340176955038356
 SpriteRenderer:
   m_ObjectHideFlags: 1
