@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 4c7dd3a0c12ff6b47aa9e7f7cad9c6ca
-timeCreated: 1517105731
+timeCreated: 1517134179
 licenseType: Free
 MonoImporter:
   externalObjects: {}
@@ -10,6 +10,7 @@ MonoImporter:
   - endPoint: {fileID: 1676218920910426, guid: e97c84dd037dea24babaddb3e5bc28e0, type: 2}
   - submarine: {fileID: 1338142367968010, guid: 77c877e5f74e2544d9560fefdc0f9fc8,
       type: 2}
+  - battery: {fileID: 1230902105551168, guid: 0ef2aa56b8f81894891ba451d1e8dbb7, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

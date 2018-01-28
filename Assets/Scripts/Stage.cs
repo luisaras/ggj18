@@ -4,16 +4,34 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour {
 
-	public static Stage instance;
+    public static Stage instance;
 
-	public int height;
-	public int width;
-    public bool finite;
+    public int height = 15;
+    public int width = 15;
 
     public List<Vector2> endPos;
     public GameObject bomb;
     public GameObject endPoint;
     public GameObject submarine;
+    public GameObject battery;
+
+    /** represents a space **/
+    public class Space {
+        public GameObject obj;
+        /**
+         * 0 - Nothing.
+         * 1 - Bomb.
+         * 2 - Initial Position.
+         * 3 - Final Position.
+         * 5 - WarningBomb.
+         * */
+        public int value = 0;
+    }
+
+    // Holds objects of infinite run.
+    // After each movement towards a direction, new objects are created on the border towards same direction. Distant objects will be deleted.
+    // A map with 10x10 is suficient to make this gameMode works nicely.
+    public Space[,] Board;
 
     /**
      * 1 - SURVIVAL
@@ -32,13 +50,97 @@ public class Stage : MonoBehaviour {
     }
 
     public void prepareField() {
-        // Initializing public variables:
+        if(gameMode == 1) {
+            survivalPrepare();
+        } else if (gameMode == 2) {
+            infiniteRunPrepare();
+        }
+    }
+
+    public void survivalPrepare() {
         int[,] rawSpace = new int[width, height];
 
         fillBorderWithBombs(rawSpace);
         createPlayer(rawSpace);
-        fillSpace(10, rawSpace);
+        fillSurvivalSpace(10, rawSpace);
         buildField(rawSpace);
+    }
+
+    public void infiniteRunPrepare() {
+        initializeInfiniteRun();
+        int numBombs = (width * height) / 5;
+        createRandomMinesAround(numBombs);
+        int numBatteries = (width * height) / 10;
+        createRandomBatteriesAround(numBatteries);
+    }
+
+    public void initializeInfiniteRun() {
+        // initializeBoard:
+        Board = new Space[width, height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                Board[i, j] = new Space();
+            }
+        }
+
+        // Create player.
+        int x, y;
+        x = width / 2;
+        y = height / 2;
+        Transform player = Instantiate(submarine, new Vector3(x, y, 0), Quaternion.identity).transform;
+        Transform camera = GameObject.Find("Main Camera").transform;
+        camera.SetParent(player);
+        camera.position = new Vector3(player.position.x, player.position.y, -5);
+        Board[x, y].value = 2;
+    }
+
+    public void createRandomMinesAround(int number) {
+        int x, y;
+        int counter = 0;
+
+        for (int i = 0; i < 100; ++i) {
+            x = Random.Range(0, width);
+            y = Random.Range(0, height);
+
+            if (createInfiniteWarningBomb(x, y)) {
+                counter++;
+            };
+
+            if (counter == number) {
+                return;
+            }
+        }
+    }
+
+    public void createRandomBatteriesAround(int number) {
+        int x, y;
+        int counter = 0;
+
+        for (int i = 0; i < 100; ++i) {
+            x = Random.Range(0, width);
+            y = Random.Range(0, height);
+
+            if (createBattery(x, y)) {
+                counter++;
+            };
+
+            if (counter == number) {
+                return;
+            }
+        }
+    }
+
+    public void setBoard(int i, int j, int value) {
+        Board[i, j].value = value;
+    }
+
+    public void setBoard(int i, int j, GameObject obj) {
+        Board[i, j].obj = obj;
+    }
+
+    public void deleteBoard(int i, int j) {
+        Board[i, j].value = 0;
+        Board[i, j].obj = null;
     }
 
     public void buildField(int[,] rawSpace) {
@@ -73,8 +175,8 @@ public class Stage : MonoBehaviour {
         rawSpace[x, y] = 2;
     }
 
-    public void createBomb(float x, float y) {
-        Instantiate(bomb, new Vector3(x, y, 0), Quaternion.identity);
+    public GameObject createBomb(float x, float y) {
+        return Instantiate(bomb, new Vector3(x, y, 0), Quaternion.identity);
     }
 
     public void createEndPoint(float x, float y) {
@@ -96,26 +198,60 @@ public class Stage : MonoBehaviour {
         }
     }
 
-    public bool createWarningBomb(int _i, int _j, int[,] rawSpace) {
-        if(p(_i, _j) && rawSpace[_i, _j] != 0) {
+    public bool createBattery(int i, int j) {
+        if (Board[i, j].value != 0 && Board[i, j].value != 5 && Board[i, j].value != 7) {
+            return false;
+        }
+
+        Board[i, j].value = 7;
+        Instantiate(battery, new Vector3(i, j), Quaternion.identity);
+
+        return true;
+    }
+
+    public bool createInfiniteWarningBomb(int i, int j) {
+        if(Board[i, j].value != 0) {
+            return false;
+        }
+
+        Board[i, j].value = 1;
+        createBomb(i, j);
+
+        for (int a = -1; a <= 1; a++) 
+            for(int b = -1; b <= 1; b++)
+                placeInfiniteWarning(i + a, j + b);
+
+        return true;
+    }
+
+    public bool createSurvivalWarningBomb(int _i, int _j, int[,] rawSpace) {
+        if (p(_i, _j) && rawSpace[_i, _j] != 0) {
             return false;
         }
 
         rawSpace[_i, _j] = 1;
 
-        for (int i = -1; i <= 1; i++) 
-            for(int j = -1; j <= 1; j++)
-                placeWarning(i + _i, j + _j, rawSpace);
+        for (int i = -1; i <= 1; i++)
+            for (int j = -1; j <= 1; j++)
+                placeSurvivalWarning(i + _i, j + _j, rawSpace);
 
         return true;
     }
 
-    public bool placeWarning(int i, int j, int[,] rawSpace) {
+    public bool placeSurvivalWarning(int i, int j, int[,] rawSpace) {
         if (!p(i, j))
             return false;
 
         if (rawSpace[i, j] == 0)
             rawSpace[i, j] = 5;
+
+        return true;
+    }
+
+    public bool placeInfiniteWarning(int i, int j) {
+        if (p(i, j) && Board[i, j].value == 0) {
+            Board[i, j].value = 5;
+        }
 
         return true;
     }
@@ -129,7 +265,7 @@ public class Stage : MonoBehaviour {
         return true;
     }
 
-    public void fillSpace(int number, int[,] rawSpace) {
+    public void fillSurvivalSpace(int number, int[,] rawSpace) {
         int x, y;
         int counter = 0;
 
@@ -137,7 +273,7 @@ public class Stage : MonoBehaviour {
             x = Random.Range(1, width - 2);
             y = Random.Range(1, height - 2);
 
-            if (createWarningBomb(x, y, rawSpace)) {
+            if (createSurvivalWarningBomb(x, y, rawSpace)) {
                 counter++;
             };
 

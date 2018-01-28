@@ -24,9 +24,19 @@ public class Player : MonoBehaviour {
 
     public float playTime;
 
-	void Awake() {
+    public float energy = 100;
+    public float energyPower;
+    public float energyLossDPS;
+
+
+    void Awake() {
         playTime = Time.time;
         instance = this;
+    }
+
+    void Start() {
+        energyLossDPS = energy / 30;
+        energyPower = energyLossDPS * 10;
     }
 
     // Update is called once per frame
@@ -85,7 +95,16 @@ public class Player : MonoBehaviour {
 
 			}
 		}
-	}
+
+        executeEnergyModule();
+    }
+
+    public void executeEnergyModule() {
+        energy = energy - (energyLossDPS * Time.deltaTime);
+        if(energy < 0) {
+            Die();
+        }
+    }
 
     public void Unblock() {
         blocked = false;
@@ -102,7 +121,9 @@ public class Player : MonoBehaviour {
         GameObject WG = Instantiate(wingui, Stage.instance.transform.position, Quaternion.identity);
         WG.SetActive(true);
         dead = true;
-
     }
 
+    public void fillBattery() {
+        energy = energy + energyPower;
+    }
 }
