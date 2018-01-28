@@ -97,7 +97,8 @@ public class Player : MonoBehaviour {
                 Invoke("Unblock", cooldown);
 			}
 		}
-        executeEnergyModule();
+		if (Stage.gameMode == 2)
+        	executeEnergyModule();
     }
 
     public void executeEnergyModule() {
