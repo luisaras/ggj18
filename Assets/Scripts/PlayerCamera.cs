@@ -10,7 +10,7 @@ public class PlayerCamera : MonoBehaviour {
 	void Update () {
 		transform.position = Vector3.Lerp (transform.position, 
 			Player.instance.transform.position + new Vector3 (0, 0, -5), 
-			speed);
+			speed * Time.deltaTime * 60);
 	}
 
 }

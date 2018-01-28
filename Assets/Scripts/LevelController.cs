@@ -14,7 +14,7 @@ public class LevelController : MonoBehaviour {
 		SceneManager.LoadScene(level);
 	}
 
-	public static void Quit(){
+	public void QuitGame(){
 		Application.Quit();
 	}
 	

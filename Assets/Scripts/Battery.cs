@@ -16,7 +16,7 @@ public class Battery : MonoBehaviour {
         if ((transform.position - Player.instance.transform.position).magnitude < 0.5) {
             // GameObject exp = Instantiate(explosion);
             // exp.transform.position = Player.instance.transform.position;
-            Player.instance.fillBattery();
+            Player.instance.FillBattery();
             Destroy(gameObject);
         }
     }
